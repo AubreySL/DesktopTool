@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EncryptView from '@/views/EncryptView.vue'
+import LayoutView from '@/components/layout/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,8 +8,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      component: LayoutView,
+    },
+    {
+      path: '/EncryptTool',
+      name: 'EncryptTool',
       component: EncryptView,
     },
+
     // {
     //   path: '/about',
     //   name: 'about',
