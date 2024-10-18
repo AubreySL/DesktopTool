@@ -6,12 +6,11 @@
  * @LastEditTime: 2024-06-07 16:53:14
 -->
 <template>
-    <EncryptView></EncryptView>
+    <LayoutView></LayoutView>
 </template>
 
 <script setup lang="ts">
-
-import EncryptView from "@/views/EncryptView.vue";
+import LayoutView from "@/components/layout/index.vue"
 
 </script>
 

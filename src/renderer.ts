@@ -30,12 +30,8 @@ import './index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Button, message, Input, Row, Col, Space } from 'ant-design-vue'
+import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 const app = createApp(App)
 
-app.use(router)
-
-app.use(Button).use(Input).use(Row).use(Col).use(Space).mount('#app')
-
-app.config.globalProperties.$message = message
+app.use(router).use(Antd).mount('#app')
