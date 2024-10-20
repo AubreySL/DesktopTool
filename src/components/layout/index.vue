@@ -20,11 +20,10 @@ import {
 } from '@ant-design/icons-vue';
 import { reactive, ref, watch, VueElement, h } from 'vue';
 import type { MenuProps, ItemType } from 'ant-design-vue';
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import type { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
 
 const router = useRouter()
-const route = useRoute()
 
 const collapsed = ref<boolean>(true)
 const selectedKeys = ref<string[]>(['/EncryptTool']);
@@ -47,7 +46,7 @@ function getItem(
 }
 const items: ItemType[] = reactive([
     getItem('AES 加解密', '/EncryptTool', () => h(LockOutlined),),
-    getItem('爬虫', 'sub2', () => h(DownloadOutlined)),
+    getItem('爬虫', '/CrawlerTool', () => h(DownloadOutlined)),
 
 ]);
 

@@ -15,6 +15,11 @@ const router = createRouter({
       name: 'EncryptTool',
       component: EncryptView,
     },
+    {
+      path: '/CrawlerTool',
+      name: 'CrawlerTool',
+      component: ()=> import("@/views/CrawlerView.vue"),
+    },
 
     // {
     //   path: '/about',

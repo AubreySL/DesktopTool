@@ -1,0 +1,57 @@
+{
+    "config": [
+        {
+            "name": "掘金",
+            "title_path": "//h1[@class='article-title']/text()",
+            "article_path": "//div[@id='article-root']",
+            "visible_css_selector": "div#article-root"
+        },
+        {
+            "name": "DDOSI",
+            "title_path": "//h1[@class='entry-title']/text()",
+            "article_path": "//article",
+            "visible_css_selector": "article"
+        },
+        {
+            "name": "简书",
+            "title_path": "//h1[@class='_1RuRku']/text()",
+            "article_path": "//article",
+            "visible_css_selector": "article"
+        },
+        {
+            "name": "zhangxinxu",
+            "title_path": "//h2/text()",
+            "article_path": "//article",
+            "visible_css_selector": "article"
+        },
+        {
+            "name": "FreeBuf网络安全",
+            "title_path": "//span[@class='title-span']/text()",
+            "article_path": "//div[@class='content-detail']"
+        },
+        {
+            "name": "知乎",
+            "title_path": "//h1[@class='Post-Title']/text()",
+            "article_path": "//article",
+            "visible_css_selector": "article"
+        },
+        {
+            "name": "知乎2",
+            "title_path": "//h1[@class='Post-Title']/text()",
+            "article_path": "//article",
+            "visible_css_selector": "h1.Post-Title"
+        },
+        {
+            "name": "Github ",
+            "title_path": "//span[@class='js-issue-title markdown-title']/text()",
+            "article_path": "//td[@class='d-block comment-body markdown-body  js-comment-body']",
+            "visible_css_selector": "td.markdown-body"
+        },
+        {
+            "name": "Vue3js ",
+            "title_path": "//a[@class='header-anchor']/text()",
+            "article_path": "//main[@class='page']",
+            "visible_css_selector": "main.page"
+        }
+    ]
+}
