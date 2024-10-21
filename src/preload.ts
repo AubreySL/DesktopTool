@@ -3,5 +3,6 @@
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    getConfigData: () => ipcRenderer.invoke('getConfigData')
+    getConfigData: () => ipcRenderer.invoke('getConfigData'),
+    fetchPage: () => ipcRenderer.invoke('fetchPage')
 })

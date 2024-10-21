@@ -1,5 +1,6 @@
 export interface IElectronAPI {
-  getConfigData: () => Promise<void>,
+  getConfigData: () => Promise<string>,
+  fetchPage: (url ?:string, article?:string, title?:string ) => void
   }
   
   declare global {

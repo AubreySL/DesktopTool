@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu , ipcMain} from 'electron'
 import path from 'path'
 import {readConfigFile} from "./node/readConfig"
+import { fetchPage } from './node/spider'
 
 const isDev = process.argv.includes('isDev') ?? false
 
@@ -33,7 +34,6 @@ const createWindow = () => {
   // Open the DevTools.
   isDev && mainWindow.webContents.openDevTools()
 
-  readConfigFile();
   // 移除菜单栏
   Menu.setApplicationMenu(null)
 }
@@ -43,6 +43,7 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle('getConfigData', readConfigFile)
+  ipcMain.handle('fetchPage', fetchPage)
   createWindow()
 
   app.on('activate', function () {
