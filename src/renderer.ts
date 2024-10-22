@@ -30,8 +30,13 @@ import './index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import Antd from 'ant-design-vue'
+import Antd, { message } from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
+import type { msgType } from './type/type'
 const app = createApp(App)
 
 app.use(router).use(Antd).mount('#app')
+
+window.electronAPI.showMessage((value:string, type:msgType="success") => {
+    message[type](value)
+  })

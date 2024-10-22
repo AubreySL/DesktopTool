@@ -1,12 +1,14 @@
 import { app, BrowserWindow, Menu , ipcMain} from 'electron'
 import path from 'path'
 import {readConfigFile} from "./node/readConfig"
-import { fetchPage } from './node/spider'
+import { handleFetchPage } from './node/spider'
 
 const isDev = process.argv.includes('isDev') ?? false
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string
 declare const MAIN_WINDOW_VITE_NAME: string
+
+let mainWindow: BrowserWindow | null = null;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit()
@@ -33,9 +35,12 @@ const createWindow = () => {
 
   // Open the DevTools.
   isDev && mainWindow.webContents.openDevTools()
+  
 
   // 移除菜单栏
   Menu.setApplicationMenu(null)
+
+  return mainWindow;
 }
 
 // This method will be called when Electron has finished
@@ -43,8 +48,9 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle('getConfigData', readConfigFile)
-  ipcMain.handle('fetchPage', fetchPage)
-  createWindow()
+  ipcMain.handle('handleFetchPage', handleFetchPage)
+
+  mainWindow = createWindow()
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -70,3 +76,7 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+export  function getMainWindow(){
+  return mainWindow
+}

@@ -1,12 +1,15 @@
 import puppeteer from 'puppeteer'
+import { saveFileSource } from './fileUtil'
+import { html2md } from './html2md'
+import type { IpcMainInvokeEvent } from 'electron'
 
-export async function fetchPage(
- 
-) {
-    const url = 'https://juejin.cn/post/7407385581079396389',
-    article = 'div#article-root',
-    // title = "//h1[@class='article-title']/text()";
-    title = "h1.article-title";
+function delay(time: number) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time)
+  })
+}
+
+export async function handleFetchPage(event: IpcMainInvokeEvent, url:string, title:string, article: string) {
   // Launch the browser and open a new blank page
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
@@ -17,21 +20,22 @@ export async function fetchPage(
   // Set screen size
   await page.setViewport({ width: 1080, height: 1024 })
 
+  //wait page loading done
+  await delay(4_000)
   // Query for an element handle.
   const mainElement = await page.waitForSelector(article, {
     visible: true,
-    timeout: 50_000
+    timeout: 15_000,
   })
-//   const titleElement = await page.waitForSelector(`::-p-xpath(${title})`)
+  const mainElementHtml =
+    (await mainElement?.evaluate(el => el.innerHTML?.trim().toString())) ??
+    'body'
   const titleElement = await page.waitForSelector(title)
+  const fullTitle =
+    (await titleElement?.evaluate(el => el.textContent?.trim().toString())) ??
+    'title'
 
-  
-  const fullTitle = await titleElement?.evaluate(el => el.textContent?.trim().toString());
-  console.log(fullTitle);
-  
-  await mainElement?.screenshot({
-    path: `${fullTitle}.png`,
-  })
-
-//   await browser.close()
+  const mdString = await html2md(mainElementHtml)
+  await saveFileSource(mdString, `${fullTitle}.md`)
+  await browser.close()
 }

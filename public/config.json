@@ -2,56 +2,67 @@
     "config": [
         {
             "name": "掘金",
-            "title_path": "//h1[@class='article-title']/text()",
-            "article_path": "//div[@id='article-root']",
-            "visible_css_selector": "div#article-root"
+            "title_xpath": "//h1[@class='article-title']/text()",
+            "article_xpath": "//div[@id='article-root']",
+            "title_selector": "h1.article-title",
+            "article_selector": "article.article"
         },
         {
             "name": "DDOSI",
-            "title_path": "//h1[@class='entry-title']/text()",
-            "article_path": "//article",
-            "visible_css_selector": "article"
+            "title_xpath": "//h1[@class='entry-title']/text()",
+            "article_xpath": "//article",
+            "title_selector": "h1.entry-title",
+            "article_selector": "article"
         },
         {
             "name": "简书",
-            "title_path": "//h1[@class='_1RuRku']/text()",
-            "article_path": "//article",
-            "visible_css_selector": "article"
+            "title_xpath": "//h1[@class='_1RuRku']/text()",
+            "article_xpath": "//article",
+            "title_selector": "h1._1RuRku",
+            "article_selector": "article"
         },
         {
             "name": "zhangxinxu",
-            "title_path": "//h2/text()",
-            "article_path": "//article",
-            "visible_css_selector": "article"
+            "title_xpath": "//h2/text()",
+            "article_xpath": "//article",
+            "title_selector": "h2",
+            "article_selector": "article"
         },
         {
             "name": "FreeBuf网络安全",
-            "title_path": "//span[@class='title-span']/text()",
-            "article_path": "//div[@class='content-detail']"
+            "title_xpath": "//span[@class='title-span']/text()",
+            "article_xpath": "//div[@class='content-detail']",
+            "title_selector": "span.title-span",
+            "article_selector": "div.content-detail"
+            
         },
         {
             "name": "知乎",
-            "title_path": "//h1[@class='Post-Title']/text()",
-            "article_path": "//article",
-            "visible_css_selector": "article"
+            "title_xpath": "//h1[@class='Post-Title']/text()",
+            "article_xpath": "//article",
+            "title_selector": "h1.Post-Title",
+            "article_selector": "article"
         },
         {
             "name": "知乎2",
-            "title_path": "//h1[@class='Post-Title']/text()",
-            "article_path": "//article",
-            "visible_css_selector": "h1.Post-Title"
+            "title_xpath": "//h1[@class='Post-Title']/text()",
+            "article_xpath": "//article",
+            "title_selector": "h1.Post-Title",
+            "article_selector": "article"
         },
         {
             "name": "Github ",
-            "title_path": "//span[@class='js-issue-title markdown-title']/text()",
-            "article_path": "//td[@class='d-block comment-body markdown-body  js-comment-body']",
-            "visible_css_selector": "td.markdown-body"
+            "title_xpath": "//span[@class='js-issue-title markdown-title']/text()",
+            "article_xpath": "//td[@class='d-block comment-body markdown-body  js-comment-body']",
+            "title_selector": "span.js-issue-title.markdown-title",
+            "article_selector": "td.d-block.comment-body.markdown-body.js-comment-body"
         },
         {
             "name": "Vue3js ",
-            "title_path": "//a[@class='header-anchor']/text()",
-            "article_path": "//main[@class='page']",
-            "visible_css_selector": "main.page"
+            "title_xpath": "//a[@class='header-anchor']/text()",
+            "article_xpath": "//main[@class='page']",
+            "title_selector": "a.header-anchor",
+            "article_selector": "main.page"
         }
     ]
 }
