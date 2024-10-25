@@ -23,9 +23,9 @@
         },
         {
             "name": "zhangxinxu",
-            "title_xpath": "//h2/text()",
+            "title_xpath": "//h2[@class='single-h']/text()",
             "article_xpath": "//article",
-            "title_selector": "h2",
+            "title_selector": "h2.single-h",
             "article_selector": "article"
         },
         {

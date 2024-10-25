@@ -1,6 +1,9 @@
 //https://www.npmjs.com/package/turndown
-const TurndownService = require('turndown')
-const turndownPluginGfm = require('turndown-plugin-gfm')
+import TurndownService from 'turndown'
+// const TurndownService = require('turndown')
+// @ts-ignore
+import * as turndownPluginGfm from 'turndown-plugin-gfm'
+
 const gfm = turndownPluginGfm.gfm
 
 export function html2md(html:string){

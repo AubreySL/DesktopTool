@@ -18,11 +18,12 @@
 
       <a-col :span="3">结果:</a-col>
       <a-col :span="21">
-        <a-input disabled v-model:value="result"></a-input>
+        <a-input readonly v-model:value="result"></a-input>
       </a-col>
     </a-row>
-    <a-row class="mt10" justify="center">
-      <a-button type="primary" @click="onStart">开始</a-button>
+    <a-row class="mt10" justify="space-around" :gutter="[5, 10]">
+      <a-button type="primary" @click="onStart" :disabled="isStartBtn">开始</a-button>
+      <a-button  @click="onOpenConfig">配置</a-button>
     </a-row>
   </div>
 </template>
@@ -44,6 +45,7 @@ const props = defineProps({
 const url = ref<string>('')
 const rule = ref<string>('')
 const result = ref<string>('')
+const isStartBtn = ref<boolean>(false)
 
 const ruleOptions = ref<SelectProps['options']>([])
 const ruleSelected = ref<ruleItem>({
@@ -63,7 +65,7 @@ ruleOptions.value = props.rules.map((item: ruleItem) => {
   }
 })
 const handleChange = (value: string, option: ruleItem) => {
-  console.log(`selected ${value}`)
+  // console.log(`selected ${value}`)
   ruleSelected.value = option
 }
 const empty = ['', null, undefined]
@@ -76,18 +78,21 @@ const onStart = () => {
     message.warning('规则不能为空！')
     return false
   }
-
-  console.log(
-    url.value,
-    ruleSelected.value.title_selector,
-    ruleSelected.value.article_selector,
-  )
+  isStartBtn.value = true
+  result.value = `标题：${ruleSelected.value.title_selector}， 内容：${ruleSelected.value.article_selector}`
 
   window.electronAPI.fetchPage(
     url.value,
     ruleSelected.value.title_selector,
     ruleSelected.value.article_selector,
   )
+
+  setTimeout(()=>{
+    isStartBtn.value = false
+  }, 2_000)
+}
+const onOpenConfig = ()=>{
+  window.electronAPI.openDirOnApp("/")
 }
 </script>
 

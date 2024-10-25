@@ -5,6 +5,7 @@ export interface IElectronAPI {
   getConfigData: () => Promise<string>
   fetchPage: (url: string, title: string, article: string) => void
   showMessage: (callback) => (value: string, type?: msgType = 'success') => {}
+  openDirOnApp: (dirPath: string) => void
 }
 
 declare global {

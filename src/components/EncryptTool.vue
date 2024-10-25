@@ -67,5 +67,3 @@ function doDecode(key: string, result: string) {
 
 }
 </script>
-
-<style scoped></style>

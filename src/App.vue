@@ -14,4 +14,3 @@ import LayoutView from "@/components/layout/index.vue"
 
 </script>
 
-<style scoped></style>

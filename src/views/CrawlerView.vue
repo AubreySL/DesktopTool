@@ -16,5 +16,3 @@ window.electronAPI.getConfigData().then(value=>{
 
 </script>
 
-<style scoped>
-</style>

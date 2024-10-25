@@ -2,7 +2,8 @@ import { app, BrowserWindow, Menu , ipcMain} from 'electron'
 import path from 'path'
 import {readConfigFile} from "./node/readConfig"
 import { handleFetchPage } from './node/spider'
-
+import { openDirOnApp } from './node/fileUtil'
+import started from "electron-squirrel-startup";
 const isDev = process.argv.includes('isDev') ?? false
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string
@@ -10,7 +11,7 @@ declare const MAIN_WINDOW_VITE_NAME: string
 
 let mainWindow: BrowserWindow | null = null;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
+if (started) {
   app.quit()
 }
 
@@ -49,6 +50,8 @@ const createWindow = () => {
 app.whenReady().then(() => {
   ipcMain.handle('getConfigData', readConfigFile)
   ipcMain.handle('handleFetchPage', handleFetchPage)
+
+  ipcMain.on("open-dir-on-app", openDirOnApp)
 
   mainWindow = createWindow()
 
