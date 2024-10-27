@@ -33,10 +33,10 @@ export function openDirOnApp(event: IpcMainInvokeEvent, dirPath: string){
   try {
     //app.getAppPath()
     //app.getPath('exe')
-    const path = `${app.getPath('appData')}${dirPath}`
+    const path = `${app.getPath('appData')}/${app.getName()}/${dirPath}`
     console.log(path);
     if (fs.existsSync(path)) {
-      shell.openPath(path);
+      shell.showItemInFolder(path);
       sendMsg("操作成功")
     } else {
       throw new Error("目录不存在");

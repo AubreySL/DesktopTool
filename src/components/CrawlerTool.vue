@@ -95,7 +95,7 @@ const onStart = () => {
   )
 }
 const onOpenConfig = ()=>{
-  window.electronAPI.openDirOnApp("/")
+  window.electronAPI.openDirOnApp("config/config.json")
 }
 
 window.electronAPI.updateCrawlerLog((text, state=true)=>{

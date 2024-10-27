@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu , ipcMain} from 'electron'
 import path from 'path'
-import {readConfigFile} from "./node/readConfig"
+import {initConfigFile, readConfigFile} from "./node/readConfig"
 import { handleFetchPage } from './node/spider'
 import { openDirOnApp } from './node/fileUtil'
 import started from "electron-squirrel-startup";
@@ -41,6 +41,9 @@ const createWindow = () => {
   // 移除菜单栏
   Menu.setApplicationMenu(null)
 
+  // inite config 
+  initConfigFile()
+  
   return mainWindow;
 }
 
