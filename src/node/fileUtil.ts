@@ -32,7 +32,8 @@ export async function saveFileSource(source: string, fileName: string) {
 export function openDirOnApp(event: IpcMainInvokeEvent, dirPath: string){
   try {
     //app.getAppPath()
-    const path = `${__dirname}${dirPath}`
+    //app.getPath('exe')
+    const path = `${app.getPath('appData')}${dirPath}`
     console.log(path);
     if (fs.existsSync(path)) {
       shell.openPath(path);
@@ -45,4 +46,9 @@ export function openDirOnApp(event: IpcMainInvokeEvent, dirPath: string){
     sendMsg(String(err), 'error')
     console.error(err);
   }
+}
+
+export function updateCrawlerLog(txt:string, state?: boolean){
+  const mainWindow = getMainWindow(); 
+  mainWindow?.webContents.send('updateCrawlerLog', txt, state);
 }

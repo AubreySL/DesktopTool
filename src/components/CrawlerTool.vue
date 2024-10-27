@@ -16,9 +16,13 @@
         ></a-select>
       </a-col>
 
-      <a-col :span="3">结果:</a-col>
+      <a-col :span="3">描述:</a-col>
       <a-col :span="21">
         <a-input readonly v-model:value="result"></a-input>
+      </a-col>
+      <a-col :span="3">日志:</a-col>
+      <a-col :span="21">
+        <a-textarea readonly v-model:value="log" :autoSize="{ minRows: 4, maxRows: 8 }"></a-textarea>
       </a-col>
     </a-row>
     <a-row class="mt10" justify="space-around" :gutter="[5, 10]">
@@ -46,6 +50,7 @@ const url = ref<string>('')
 const rule = ref<string>('')
 const result = ref<string>('')
 const isStartBtn = ref<boolean>(false)
+const log = ref<string>('  ')
 
 const ruleOptions = ref<SelectProps['options']>([])
 const ruleSelected = ref<ruleItem>({
@@ -70,6 +75,8 @@ const handleChange = (value: string, option: ruleItem) => {
 }
 const empty = ['', null, undefined]
 const onStart = () => {
+  log.value = '  '
+  result.value = ''
   if (empty.includes(url.value)) {
     message.warning('网站不能为空！')
     return false
@@ -86,14 +93,17 @@ const onStart = () => {
     ruleSelected.value.title_selector,
     ruleSelected.value.article_selector,
   )
-
-  setTimeout(()=>{
-    isStartBtn.value = false
-  }, 2_000)
 }
 const onOpenConfig = ()=>{
   window.electronAPI.openDirOnApp("/")
 }
+
+window.electronAPI.updateCrawlerLog((text, state=true)=>{
+  log.value +=`---${text}---
+  `
+  isStartBtn.value = state;
+ 
+})
 </script>
 
 <style scoped>
