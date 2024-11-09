@@ -22,18 +22,31 @@
       </a-col>
       <a-col :span="3">日志:</a-col>
       <a-col :span="21">
-        <a-textarea readonly v-model:value="log" :autoSize="{ minRows: 4, maxRows: 8 }"></a-textarea>
+        <a-textarea
+          readonly
+          v-model:value="log"
+          :autoSize="{ minRows: 4, maxRows: 8 }"
+        ></a-textarea>
       </a-col>
     </a-row>
-    <a-row class="mt10" justify="space-around" :gutter="[5, 10]">
-      <a-button type="primary" @click="onStart" :disabled="isStartBtn">开始</a-button>
-      <a-button  @click="onOpenConfig">配置</a-button>
+    <a-row class="mt10" justify="center" :gutter="[5, 10]">
+      <a-col>
+        <a-button
+          class="mr10"
+          type="primary"
+          @click="onStart"
+          :disabled="isStartBtn"
+          >开始</a-button
+        >
+        <a-button class="mr10" @click="onOpenConfig">查看配置</a-button>
+        <a-button @click="onRefreshConfig">刷新配置</a-button>
+      </a-col>
     </a-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useAttrs } from 'vue'
 import { message, type SelectProps } from 'ant-design-vue'
 import type { ruleItem } from '@/type/type'
 
@@ -45,6 +58,8 @@ const props = defineProps({
     },
   },
 })
+
+const attrs= useAttrs()  as Record<string, ()=> void>
 
 const url = ref<string>('')
 const rule = ref<string>('')
@@ -94,20 +109,29 @@ const onStart = () => {
     ruleSelected.value.article_selector,
   )
 }
-const onOpenConfig = ()=>{
-  window.electronAPI.openDirOnApp("config/config.json")
+const onOpenConfig = () => {
+  window.electronAPI.openDirOnApp('config/config.json')
 }
 
-window.electronAPI.updateCrawlerLog((text, state=true)=>{
-  log.value +=`---${text}---
+const onRefreshConfig = () => {
+ attrs.onRefresh();
+ message.info("刷新配置")
+}
+
+
+window.electronAPI.updateCrawlerLog((text, state = true) => {
+  log.value += `---${text}---
   `
-  isStartBtn.value = state;
- 
+  isStartBtn.value = state
 })
+
 </script>
 
 <style scoped>
 .mt10 {
   margin-top: 10px;
+}
+.mr10 {
+  margin-right: 10px;
 }
 </style>

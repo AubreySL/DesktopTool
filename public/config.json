@@ -63,6 +63,13 @@
             "article_xpath": "//main[@class='page']",
             "title_selector": "a.header-anchor",
             "article_selector": "main.page"
+        },
+        {
+            "name": "51cto ",
+            "title_xpath": "//div[@class='title']/text()",
+            "article_xpath": "//div[@class='article-content-wrap]",
+            "title_selector": "div.title > h1",
+            "article_selector": "div.article-content-wrap"
         }
     ]
 }

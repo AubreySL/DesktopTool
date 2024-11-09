@@ -4,7 +4,7 @@ import {initConfigFile, readConfigFile} from "./node/readConfig"
 import { handleFetchPage } from './node/spider'
 import { openDirOnApp } from './node/fileUtil'
 import started from "electron-squirrel-startup";
-const isDev = process.argv.includes('isDev') ?? false
+import { isDev } from './node/env'
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string
 declare const MAIN_WINDOW_VITE_NAME: string

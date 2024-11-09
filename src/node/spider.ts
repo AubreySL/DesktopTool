@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer'
 import { saveFileSource, sendMsg, updateCrawlerLog } from './fileUtil'
 import { html2md } from './html2md'
 import type { IpcMainInvokeEvent } from 'electron'
+import { isDev } from './env'
 
 function delay(time: number) {
   return new Promise(function (resolve) {
@@ -17,7 +18,7 @@ export async function handleFetchPage(
 ) {
   updateCrawlerLog('启动浏览器')
   // Launch the browser and open a new blank page
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({ headless: !isDev })
 
   updateCrawlerLog('创建页面')
   const page = await browser.newPage()
@@ -33,28 +34,29 @@ export async function handleFetchPage(
     await delay(4_000)
     // Query for an element handle.
 
-    updateCrawlerLog('获取文章主体DOM')
-    const mainElement = await page.waitForSelector(article, {
-      timeout: 15_000,
-    })
-
     updateCrawlerLog('获取文章标题DOM')
     const titleElement = await page.waitForSelector(title, {
       timeout: 15_000,
     })
 
+    updateCrawlerLog('获取文章主体DOM')
+    const mainElement = await page.waitForSelector(article, {
+      timeout: 15_000,
+    })
+
+    const fullTitle =
+    (await titleElement?.evaluate(el => el.textContent?.trim().toString())) ??
+    'no title'
+
     const mainElementHtml =
       (await mainElement?.evaluate(el => el.innerHTML?.trim().toString())) ??
       'no article'
-
-    const fullTitle =
-      (await titleElement?.evaluate(el => el.textContent?.trim().toString())) ??
-      'no title'
 
     if ([null, undefined, ''].includes(mainElementHtml)) {
       sendMsg('爬虫失败, 标题为空', 'error')
       updateCrawlerLog('爬虫失败, 标题为空')
     }
+    
     if ([null, undefined, ''].includes(fullTitle)) {
       sendMsg('爬虫失败, 内容为空', 'error')
       updateCrawlerLog('爬虫失败, 内容为空')
