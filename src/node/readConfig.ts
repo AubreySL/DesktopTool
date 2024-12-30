@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'node:fs'
 import { sendMsg } from './fileUtil'
-const { app } = require('electron')
+import { getAppDataPath, getAppName } from './app'
 
-const dirPath = `${app.getPath('appData')}/${app.getName()}/config`
+const dirPath = `${getAppDataPath()}/${getAppName()}/config`
 const fileName = 'config.json'
 const fileFullPath = `${dirPath}/${fileName}`
 

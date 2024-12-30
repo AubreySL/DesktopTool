@@ -59,7 +59,7 @@ const props = defineProps({
   },
 })
 
-const attrs= useAttrs()  as Record<string, ()=> void>
+const attrs = useAttrs() as Record<string, () => void>
 
 const url = ref<string>('')
 const rule = ref<string>('')
@@ -72,12 +72,13 @@ const ruleSelected = ref<ruleItem>({
   name: '掘金',
   title_xpath: "//h1[@class='article-title']/text()",
   article_xpath: "//div[@id='article-root']",
-  title_selector: 'h1#article-title',
+  title_selector: 'h1.article-title',
   article_selector: 'article.article',
 })
 
-ruleOptions.value = props.rules.map((item: ruleItem) => {
+ruleOptions.value = props.rules.map((item: ruleItem, index) => {
   const { name } = item
+  index == 0 && (rule.value = name)
   return {
     ...item,
     label: name,
@@ -114,17 +115,15 @@ const onOpenConfig = () => {
 }
 
 const onRefreshConfig = () => {
- attrs.onRefresh();
- message.info("刷新配置")
+  attrs.onRefresh()
+  message.info('刷新配置')
 }
-
 
 window.electronAPI.updateCrawlerLog((text, state = true) => {
   log.value += `---${text}---
   `
   isStartBtn.value = state
 })
-
 </script>
 
 <style scoped>
