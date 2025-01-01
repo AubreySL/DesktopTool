@@ -123,17 +123,21 @@ export async function handleFetchPage(
     'svg': 'svg+xml',
 }
 //文件后缀正则
-const fileSuffixReg = new RegExp(`.(${Object.keys(ext_dict).join('|')})`, 'ig');
+const fileSuffixReg = new RegExp(`\\.(${Object.keys(ext_dict).join('|')})`, 'i');
 
 async function transformImgToDataurl(imgMap:Map<string,string>, fileName: string, mainHtmlStr: string){
   dirPathCreator(imgFileDirPath);
+  const failedId = new Set();
   for (const [key, value] of imgMap) {
+    console.log("---start---");
+    
     let regResult = fileSuffixReg.exec(key);
-    if(!regResult){
-      console.log(`miss match : ${key}`)
+    if(regResult === null){
+      console.log(`mismatch : ${key}`)
+      saveLog(`[mismatch]: ${key} \r\n`)
+      failedId.add(key)
       continue;
     }
-
     const targetDir=`${imgFileDirPath}/${fileName}`
     const targetPath = `${targetDir}/${value}${regResult[0]}`
     dirPathCreator(targetDir);
@@ -141,27 +145,32 @@ async function transformImgToDataurl(imgMap:Map<string,string>, fileName: string
     await downloadFile(key, targetPath).then((res:any)=>{
        try {
           if (fs.existsSync(res)) {
-            let type = res.split('.')[1];
+            let type = res.split('.')[1] as keyof typeof ext_dict;
             let data = fs.readFileSync(res, 'base64')
-            let dataUrl = `data:image/${type};base64,${data}`
+            let dataUrl = `data:image/${ext_dict[type]};base64,${data}`
             mainHtmlStr += `
     
 [${value}]: ${dataUrl}
 `
           }
         } catch (err) {
-          saveLog(`error: [${err}]`)
+          saveLog(`[error]: [${err}] \r\n`)
+          failedId.add(key)
           console.error(err)
         }
+        console.log('one done')
     });
 
   }
+
+  //record log info
   mainHtmlStr +=`
 <!--
   info:
   total:${imgMap.size},
   mapKey:${[...imgMap.keys()]},
   mapId:${[...imgMap.values()]}
+  failed:${[...failedId]}
 -->    
 `
   return mainHtmlStr;

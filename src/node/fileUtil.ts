@@ -96,7 +96,7 @@ export async function saveLog(source: string, fileName: string = '', dirPath: st
   try {
     dirPathCreator(dirPath);
     const current = new Date();
-    const datenName = `${current.getFullYear()-current.getMonth()-current.getDate()}`
+    const datenName = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`
     await fsPromise.writeFile(`${dirPath}/${fileName || datenName}.txt`, source, { flag: 'a+' })
   } catch (err) {
     console.error(err)
